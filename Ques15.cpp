@@ -26,6 +26,13 @@ using namespace std;
 #define forr(i, n) for (int i = n; i >= 0; i--)
 #define fep(i, a, b) for (int i = a; i < b; i++)
 
+void swap(int a[], int i, int j)
+{
+    int temp = a[j];
+    a[j] = a[i];
+    a[i] = temp;
+}
+
 void solve()
 {
     int n;
@@ -33,44 +40,26 @@ void solve()
     cin >> n;
     int a[n];
     cin(a, n);
-    for (int i = n - 1; i >= 0; i--)
+    int i = n - 2;
+    while (i >= 0 && a[i] > a[i + 1])
+        i--;
+    if (i >= 0)
     {
-        if (a[i] > a[i - 1])
-        {
-            flag = true;
-            if (i == n - 1)
-            {
-                int temp = a[i];
-                a[i] = a[i - 1];
-                a[i - 1] = temp;
-                break;
-            }
-            else
-            {
-                for (int j = i; j < n; j++)
-                {
-                    if (a[j] - a[i - 1] < 0)
-                    {
-                        int temp = a[i - 1];
-                        a[i - 1] = a[j - 1];
-                        a[j - 1] = temp;
-                        break;
-                    }
-                }
+        int j = n - 1;
+        while (a[j] <= a[i])
+            j--;
 
-                for (int j = i, k = n - 1; k > j; j++, k--)
-                {
-                    int temp = a[j];
-                    a[j] = a[k];
-                    a[k] = temp;
-                }
-            }
-            break;
-        }
+        swap(a, i, j);
     }
-    if (flag == false)
-        sort(a, a + n);
-    
+    i++;
+    int j = n - 1;
+    while (i < j)
+    {
+        swap(a, i, j);
+        i++;
+        j--;
+    }
+
     cout(a, n);
 }
 
