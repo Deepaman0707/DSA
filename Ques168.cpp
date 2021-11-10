@@ -50,6 +50,37 @@ void preOrderTraversal(tree *node)
     preOrderTraversal(node->right);
 }
 
+// Iterative method for the same.
+
+void preOrderIterative(tree *node)
+{
+    if (node == NULL)
+        return;
+
+    stack<tree *> s;
+    vector<int> ans;
+    s.push(node);
+    while (!s.empty())
+    {
+        int size = s.size();
+        for (int i = 0; i < size; i++)
+        {
+            tree *temp = s.top();
+            s.pop();
+            if (temp->right != NULL)
+                s.push(temp->right);
+            if (temp->left != NULL)
+                s.push(temp->left);
+            ans.pb(temp->val);
+        }
+    }
+
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
+    }
+}
+
 void solve()
 {
     tree *root = new tree(1);
@@ -61,6 +92,8 @@ void solve()
     root->right->right = new tree(7);
 
     preOrderTraversal(root);
+    cout << endl;
+    preOrderIterative(root);
 }
 
 int main()
