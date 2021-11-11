@@ -50,6 +50,35 @@ void inOrderTraversal(tree *node)
     inOrderTraversal(node->right);
 }
 
+void inOrderIterative(tree *node)
+{
+    stack<tree *> s;
+    vector<int> ans;
+    tree *temp = node;
+    while (true)
+    {
+        if (temp != NULL)
+        {
+            s.push(temp);
+            temp = temp->left;
+        }
+        else
+        {
+            if (s.empty())
+                break;
+            temp = s.top();
+            s.pop();
+            ans.pb(temp->val);
+            temp = temp->right;
+        }
+    }
+
+    for (int i = 0; i < ans.size(); i++)
+    {
+        cout << ans[i] << " ";
+    }
+}
+
 void solve()
 {
     tree *root = new tree(1);
@@ -61,6 +90,8 @@ void solve()
     root->right->right = new tree(7);
 
     inOrderTraversal(root);
+    cout << endl;
+    inOrderIterative(root);
 }
 
 int main()
