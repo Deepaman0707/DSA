@@ -39,38 +39,32 @@ struct tree
     }
 };
 
-// Recursive method for postorder traversal.
-
-void postOrderTraversal(tree *node)
+void levelOrderTraversal(tree *root)
 {
-    if (node == NULL)
+    if (root == NULL)
+    {
+        cout << 0;
         return;
-    postOrderTraversal(node->left);
-    postOrderTraversal(node->right);
-    cout << node->val << " ";
-}
-
-void postOrderIterative(tree *node)
-{
-    stack<tree *> s1;
-    vector<int> ans;
-    s1.push(node);
-    while (!s1.empty())
-    {
-        tree *temp = s1.top();
-        s1.pop();
-        ans.pb(temp->val);
-        if (temp->left != NULL)
-            s1.push(temp->left);
-        if (temp->right != NULL)
-            s1.push(temp->right);
     }
-
-    for (int i = ans.size() - 1; i >= 0; i--)
+    int count = 0;
+    queue<tree *> node;
+    node.push(root);
+    while (!node.empty())
     {
-        cout << ans[i] << " ";
+        int size = node.size();
+        for (int i = 0; i < size; i++)
+        {
+            tree *temp = node.front();
+            node.pop();
+            if (temp->left != NULL)
+                node.push(temp->left);
+            if (temp->right != NULL)
+                node.push(temp->right);
+        }
+        count ++;
     }
-}
+    cout << count << endl;
+} 
 
 void solve()
 {
@@ -81,10 +75,9 @@ void solve()
     root->left->right = new tree(5);
     root->right->left = new tree(6);
     root->right->right = new tree(7);
+    root->left->left->left = new tree(8);
 
-    postOrderTraversal(root);
-    cout << endl;
-    postOrderIterative(root);
+    levelOrderTraversal(root);
 }
 
 int main()
